@@ -8,6 +8,7 @@ package taskers;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javafx.application.Platform;
+import notifcationexamples.NotificationsUIController;
 
 /**
  *
@@ -24,28 +25,36 @@ public class Task3 extends Thread {
     
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     
-    public Task3(int maxValue, int notifyEvery)  {
+    private NotificationsUIController controller;
+    
+    public Task3(int maxValue, int notifyEvery, NotificationsUIController controller)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.controller = controller;
     }
     
     @Override
     public void run() {
-        doNotify("Task3 start.");
+        doNotify("Task 3 started.");
         for (int i = 0; i < maxValue; i++) {
             
             if (i % notifyEvery == 0) {
-                doNotify("It happened in Task3: " + i);
+                doNotify("It happened in Task 3: " + i);
             }
             
             if (exit) {
                 return;
             }
         }
-        doNotify("Task3 done.");
+        System.out.println("Task 3 complete.");
+        doNotify("Task 3 complete.");
+        Platform.runLater(() -> {
+            controller.task3Complete();
+        });
     }
     
     public void end() {
+        doNotify("Task 3 stopped.");
         exit = true;
     }
     

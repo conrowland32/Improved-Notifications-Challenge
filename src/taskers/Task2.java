@@ -7,6 +7,7 @@ package taskers;
 
 import java.util.ArrayList;
 import javafx.application.Platform;
+import notifcationexamples.NotificationsUIController;
 
 /**
  *
@@ -24,29 +25,37 @@ public class Task2 extends Thread {
     
     private ArrayList<Notification> notifications = new ArrayList<>();
     
-    public Task2(int maxValue, int notifyEvery)  {
+    private NotificationsUIController controller;
+    
+    public Task2(int maxValue, int notifyEvery, NotificationsUIController controller)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.controller = controller;
     }
     
     @Override
     public void run() {
-        doNotify("Started Task2!");
+        doNotify("Task 2 started.");
         
         for (int i = 0; i < maxValue; i++) {
             
             if (i % notifyEvery == 0) {
-                doNotify("It happened in Task2: " + i);
+                doNotify("It happened in Task 2: " + i);
             }
             
             if (exit) {
                 return;
             }
         }
-        doNotify("Task2 done.");
+        System.out.println("Task 2 complete.");
+        doNotify("Task 2 complete.");
+        Platform.runLater(() -> {
+            controller.task2Complete();
+        });
     }
     
     public void end() {
+        doNotify("Task 2 stopped.");
         exit = true;
     }
     

@@ -6,6 +6,7 @@
 package taskers;
 
 import javafx.application.Platform;
+import notifcationexamples.NotificationsUIController;
 
 /**
  *
@@ -20,31 +21,39 @@ public class Task1 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
+    private boolean finished = false;
     
     private Notifiable notificationTarget;
+    private NotificationsUIController controller;
     
-    public Task1(int maxValue, int notifyEvery)  {
+    public Task1(int maxValue, int notifyEvery, NotificationsUIController controller)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.controller = controller;
     }
     
     @Override
     public void run() {
-        doNotify("Task1 start.");
+        doNotify("Task 1 started.");
         for (int i = 0; i < maxValue; i++) {
             
             if (i % notifyEvery == 0) {
-                doNotify("It happened in Task1: " + i);
+                doNotify("It happened in Task 1: " + i);
             }
             
             if (exit) {
                 return;
             }
         }
-        doNotify("Task1 done.");
+        System.out.println("Task 1 complete.");
+        doNotify("Task 1 complete.");
+        Platform.runLater(() -> {
+            controller.task1Complete();
+        });
     }
     
     public void end() {
+        doNotify("Task 1 stopped.");
         exit = true;
     }
     
