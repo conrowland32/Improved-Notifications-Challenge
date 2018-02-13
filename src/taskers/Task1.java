@@ -21,7 +21,6 @@ public class Task1 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
-    private boolean finished = false;
     
     private Notifiable notificationTarget;
     private NotificationsUIController controller;

@@ -6,7 +6,6 @@
 package notifcationexamples;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,9 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import taskers.*;
@@ -66,12 +62,10 @@ public class NotificationsUIController implements Initializable, Notifiable {
                 + "-fx-background-radius: 10px;"
                 + "-fx-focus-color: transparent;");
         
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                if (task1 != null) task1.end();
-                if (task2 != null) task2.end();
-                if (task3 != null) task3.end();
-            }
+        stage.setOnCloseRequest((WindowEvent we) -> {
+            if (task1 != null) task1.end();
+            if (task2 != null) task2.end();
+            if (task3 != null) task3.end();
         });
     }
     
